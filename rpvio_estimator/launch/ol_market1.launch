@@ -1,0 +1,26 @@
+<launch>
+
+  <arg name="playback_rate" default="1.0" />
+  <arg name="start_from" default="0" />
+  <arg name="bagfile_path" default="/home/karnik/dataset/OpenLORIS/market1-mask.bag"/>
+
+  <arg name="config_path" default = "$(find rpvio_estimator)/../config/ol_market1_config.yaml" />
+  <arg name="rpvio_path" default = "$(find rpvio_feature_tracker)/../config/../" />
+
+  <!-- Bag playback -->
+  <node name="rosbag_playback" pkg="rosbag" type="play" required="true" args=" --delay=10 --queue=1000 -r $(arg playback_rate) -s $(arg start_from) $(arg bagfile_path)"/>
+
+  <!-- RP-VIO nodes -->
+  <node name="rpvio_feature_tracker" pkg="rpvio_feature_tracker" type="rpvio_feature_tracker" output="log">
+    <param name="config_file" type="string" value="$(arg config_path)" />
+    <param name="rpvio_folder" type="string" value="$(arg rpvio_path)" />
+  </node>
+
+  <node name="rpvio_estimator" pkg="rpvio_estimator" type="rpvio_estimator" output="screen">
+    <param name="config_file" type="string" value="$(arg config_path)" />
+    <param name="rpvio_folder" type="string" value="$(arg rpvio_path)" />
+  </node>
+
+  <node name="rvizvisualisation" pkg="rviz" type="rviz" output="log" args="-d $(find rpvio_estimator)/../config/rpvio_rviz_config.rviz" />
+
+</launch>
