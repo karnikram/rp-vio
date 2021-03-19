@@ -5,7 +5,9 @@
 </p>
 RP-VIO is a monocular visual-inertial odometry (VIO) system that uses only planar features and their induced homographies, during both initialization and sliding-window estimation, for increased robustness and accuracy in dynamic environments.
 
-<br>**Introductory video**<br>
+**Pre-print**: https://arxiv.org/abs/2103.10400
+
+**Introductory video**<br><br>
 [![Intro video](https://user-images.githubusercontent.com/12653355/111311553-5e402800-8684-11eb-85bd-0db5b7494772.png)](https://youtu.be/2GMoUJEDO0U "RP-VIO: Intro Video")
 
 ## Setup
@@ -82,10 +84,14 @@ python crf_inference.py <rgb_image_dir> <labels_dir> <output_dir>
 We then write these outputs mask images back into the original bagfile on a separate topic for running RP-VIO.
 
 ## RPVIO-Sim Dataset
+<figure>
+<a href="https://user-images.githubusercontent.com/12653355/111727645-48538280-8891-11eb-90db-027f82087586.png"><img src="https://user-images.githubusercontent.com/12653355/111727645-48538280-8891-11eb-90db-027f82087586.png" width="400"/></a>
+</figure>
+<br>
 
 For an effective evaluation of the capabilities of modern VINS systems, we generate a highly-dynamic visual-inertial dataset using [AirSim](https://github.com/microsoft/AirSim/) which contains dynamic characters present throughout the sequences (including initialization), and with sufficient IMU excitation. Dynamic characters are progressively added, keeping everything else fixed, starting from no characters in the `static` sequence to eight characters in the `C8` sequence. All the generated sequences (six) in rosbag format, along with their groundtruth files, have been made available via [Zenodo](https://zenodo.org/record/4603494#.YE4BzlMzZH4).
 
-The parameters for the camera and IMU used in our dataset are as follows,
+Each rosbag contains RGB images published on the `/image` topic at 20 Hz, imu measurements published on the`/imu` topic at ~1000 Hz (which we sub-sample to 200Hz for our evaluations), and plane-instance mask images published on the`/mask` topic at 20 Hz. The groundtruth trajectory is saved as a txt file in TUM format. The parameters for the camera and IMU used in our dataset are as follows,
 <br>
 <figure>
 <a href="https://user-images.githubusercontent.com/12653355/111068192-c3ade080-84ed-11eb-82ba-486ee0cfa2a4.png"><img src="https://user-images.githubusercontent.com/12653355/111068192-c3ade080-84ed-11eb-82ba-486ee0cfa2a4.png" width="300"/></a>
