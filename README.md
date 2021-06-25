@@ -78,6 +78,8 @@ conda create --name plane_seg --file requirements.txt
 conda activate plane_seg
 ```
 
+#### Run inference
+
 Now extract images from the dataset and store them in the folder of test images and run the command given below to implement the inference. 
 
 ```
@@ -91,6 +93,8 @@ The result of the inference would be a stored in three folders named:
 1) *plane_sgmts*: masks of image (grayscale)
 2) *plane_sgmts_vis*: color visualization of mask
 3) *plane_sgmts_modified*: grayscale masks but suitable for visualization (feed this output to the CRF inference)
+
+#### Run CRF inference
 
 We also use a dense CRF model (from [PyDenseCRF](https://github.com/lucasb-eyer/pydensecrf)) to further refine the output masks. To run,
 
