@@ -85,7 +85,7 @@ Now extract images from the dataset and store them in the folder of test images 
 ```
 python inference.py --dataset=<PATH_TO_DATASET> --output_dir=<PATH_TO_OUTPUT_DIRECTORY> --test_list=<TEST_DATA_LIST.txt FILE> --ckpt_file=<MODEL> --use_preprocessed=true 
 ```
-TEST_DATA_LIST.txt is the file that points to every image within the test dataset, an example can be found here. PATH_TO_DATASET is the path to the parent directory of the test image dataset folder.
+TEST_DATA_LIST.txt is the file that points to every image within the test dataset, an example can be found [here](https://github.com/sudarshan-s-harithas/rp-vio/blob/new_branch/plane_segmentation/openloris.txt).  PATH_TO_DATASET is the path to the parent directory of the test image dataset folder.
 
 
 The result of the inference would be a stored in three folders named:
