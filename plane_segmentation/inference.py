@@ -11,10 +11,12 @@ import cv2
 
 
 # from utils_depth_only import *
-from RecoverPlane import RecoverPlane
+from RecoverPlane_perpendicular import RecoverPlane
 
 '''
+Test the train result on SYNTHIA (for params)
 @author -- Fengting Yang 
+
 @modified by Sudarshan
 
 @usage:
@@ -100,11 +102,11 @@ def color_mask(image, pred_masks, colors, alpha=0.5 ):
     '''
     N = FLAGS.num_plane
     masked_image = np.copy(image)
-    new_colors = [ [ 255,125,255 ] , [255,255,255] , [125,255,0]  ] 
+    #new_colors = [ [ 255,125,255 ] , [255,255,255] , [125,255,0]  ] 
    #  masked_image = image  # change the original color as well, so the model could have the plane color when we visualize it
     max_mask = np.max(pred_masks, axis=-1)
     for i in range(N):
-        color = new_colors[i]
+        color = colors[i]
         mask = pred_masks[:,:,i]
         masked_image = apply_mask(masked_image, mask, max_mask, color, alpha)
 
@@ -335,9 +337,75 @@ def main(_):
                 cv2.imwrite(eval_mask_path + pic_name, combined_mask)  # misc will normalize the number to 255 not good
                 modified_combined_mask = combined_mask*60
                 cv2.imwrite(modified_eval_mask_path + pic_name, modified_combined_mask)
-                
+                '''
+
+                #*****************************depth eval************************
+		#print(str(depth_file_list[idx]) ) 
+
+                gt_depth = cv2.imread(depth_file_list[idx], cv2.IMREAD_ANYCOLOR | cv2.IMREAD_ANYDEPTH)[:, :, 0] / 100.
+
+                gt_height, gt_width = gt_depth.shape
+                masked_pred_depth = cv2.resize(masked_pred_depth, dsize=( gt_width, gt_height),interpolation=cv2.INTER_NEAREST)  
+                plane_area = cv2.resize(combined_mask, dsize=(gt_width, gt_height),interpolation=cv2.INTER_NEAREST)
+                pred_depth_save = masked_pred_depth
 
 
+                mask = np.logical_and(gt_depth > MIN_DEPTH,
+                                      gt_depth < MAX_DEPTH)
+
+                mask = np.logical_and(mask, plane_area > 0) # only eval the plane area
+
+                pred_depth_save = pred_depth_save * mask * 100
+
+                seq = depth_file_list[idx].split('/')
+                if not FLAGS.use_preprocessed:
+                    seq_id = seq[-3]
+                    name_id = seq[-1]
+                else:
+                    seq_id = seq[-2]
+                    name_id = seq[-1].replace('_depth.png', '.png')
+
+                if not os.path.exists(FLAGS.output_dir + '/depth/' ):
+                    os.makedirs(FLAGS.output_dir + '/depth/' )
+                save_pred_path = FLAGS.output_dir + '/depth/' + seq_id + '_' + name_id[:-4] + '_pred.png'
+
+                # save pred_depth and error
+                cv2.imwrite(save_pred_path, pred_depth_save.astype(np.uint16))
+
+                masked_pred_depth[masked_pred_depth < MIN_DEPTH] = MIN_DEPTH
+                masked_pred_depth[masked_pred_depth > MAX_DEPTH] = MAX_DEPTH
+
+                gt_depth_validate = gt_depth[mask]
+                pred_depth_validate = masked_pred_depth[mask]
+
+                abs_rel[idx], sq_rel[idx], rms[idx], log_rms[idx], a1[idx], a2[idx], a3[idx] = \
+                    compute_errors(gt_depth_validate, pred_depth_validate)
+
+
+                # test if the thres is correct
+                # for p in range(FLAGS.num_plane):
+                #     thres_name = name[-3] + '_' + name[-1][:-4] + '_' + str(p) + '.png'
+                #     scipy.misc.imsave(visual_path + thres_name, thres_masks[:,:,p])
+
+                pred_all_masks.append(pred['pred_mask'][b,:,:,:])
+                pred_all_param.append(pred['pred_param'][b,:,:])
+
+
+        abs_rel = abs_rel[abs_rel != -100]
+        sq_rel = sq_rel[sq_rel != -100]
+        rms = rms[rms != -100]
+        log_rms = log_rms[log_rms != -100]
+        a1 = a1[a1 != -100]
+        a2 = a2[a2 != -100]
+        a3 = a3[a3 != -100]
+
+        print("{:>10}, {:>10}, {:>10}, {:>10}, {:>10}, {:>10}, {:>10}".format('abs_rel', 'sq_rel', 'rms',
+                                                                              'log_rms', 'a1', 'a2', 'a3'))
+        print("{:10.4f}, {:10.4f}, {:10.4f}, {:10.4f}, {:10.4f}, {:10.4f}, {:10.4f}".format(
+            abs_rel.mean(), sq_rel.mean(), rms.mean(), log_rms.mean(), a1.mean(), a2.mean(), a3.mean()))
+        print('avg_time %.4f/img' %(avg_time/num_test))
+
+	'''
 
 if __name__ == '__main__':
     tf.app.run()
