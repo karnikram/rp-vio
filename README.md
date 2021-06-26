@@ -31,6 +31,7 @@ Run the following commands in your terminal to clone our project and build,
     source ~/catkin_ws/devel/setup.bash
 ```
 
+
 ## Evaluation
 We provide evaluation scripts to run RP-VIO on the [RPVIO-Sim](https://github.com/karnikram/rp-vio#rpvio-sim-dataset-1) dataset, and select sequences from the [OpenLORIS-Scene]((https://lifelong-robotic-vision.github.io/dataset/scene.html)), [ADVIO](https://github.com/AaltoVision/ADVIO), and [VIODE](https://github.com/kminoda/VIODE) datasets. The output errors from your evaluation might not be exactly the same as reported in our paper, but should be similar.
 
@@ -67,21 +68,39 @@ A semantic segmentation model can also be as long as the RGB labels of the (stat
 ## Plane segmentation
 We provide a pre-trained plane instance segmentation model, based on the [Plane-Recover](https://github.com/fuy34/planerecover) model. We retrained their model, with an added inter-plane constraint, on their SYNTHIA training data and two additional sequences (00,01) from the ScanNet dataset. The model was trained on a single Titan X (maxwell) GPU for about 700K iterations. We also provide the training script.
 
-We run the model offline, after extracting and [processing](https://github.com/fuy34/planerecover#preparing-training-data) the input RGB images from their ROS bagfiles. To run the pre-trained model (requires CUDA 9.0),
+We run the model offline, after extracting and [processing](https://github.com/fuy34/planerecover#preparing-training-data) the input RGB images from their ROS bagfiles. Follow the steps given below to run the pre-trained model on your custom dataset (requires CUDA 9.0),
+
+#### Create Environment 
+
+Run the following commands to create a suitable conda environemnt,
 ```
 cd plane_segmentation/
 conda create --name plane_seg --file requirements.txt
 conda activate plane_seg
+```
+
+#### Run inference
+
+Now extract images from your dataset to a test folder, resize them to (192,320) (height, width), and run the following, 
+
+```
 python inference.py --dataset=<PATH_TO_DATASET> --output_dir=<PATH_TO_OUTPUT_DIRECTORY> --test_list=<TEST_DATA_LIST.txt FILE> --ckpt_file=<MODEL> --use_preprocessed=true 
 ```
+*TEST_DATA_LIST.txt* is a file that points to every image within the test dataset, an example can be found [here](./plane_segmentation/openloris.txt).  *PATH_TO_DATASET* is the path to the parent directory of the test folder.
+
+
+The result of the inference would be a stored in three folders that are named as *plane_sgmts* (predicted masks in grayscale), *plane_sgmts_vis* (predicted masks in color), *plane_sgmts_modified* (grayscale masks but suitable for visualization (feed this output to the CRF inference)).
+
+#### Run CRF inference
 
 We also use a dense CRF model (from [PyDenseCRF](https://github.com/lucasb-eyer/pydensecrf)) to further refine the output masks. To run,
 
 ```
 python crf_inference.py <rgb_image_dir> <labels_dir> <output_dir>
 ```
-
-We then write these outputs mask images back into the original bagfile on a separate topic for running RP-VIO.
+where the *labels_dir* is the path to the *plane_sgmts_modified* folder. 
+ 
+We then write these outputs mask images back into the original bagfile on a separate topic for running with RP-VIO.
 
 ## RPVIO-Sim Dataset
 <figure>
