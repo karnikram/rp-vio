@@ -1,0 +1,164 @@
+<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+<script type="text/javascript">google.load("jquery", "1.3.2");</script>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
+      rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="./resources/style.css" media="screen"/>
+<link rel="icon" type="image/x-icon" href="./resources/rrc-favicon.png">
+
+
+<html lang="en">
+<head>
+	<title>RP-VIO: Robust Plane-based Visual-Inertial Odometry for Dynamic Environments</title>
+    <!-- Facebook automatically scrapes this. Go to https://developers.facebook.com/tools/debug/
+        if you update and want to force Facebook to re-scrape. -->
+	<meta property="og:image" content="https://karnikram.info/rpvio/resources/teaser_crop.png"/>
+	<meta property="og:title" content="RP-VIO: Robust Plane-based Visual-Inertial Odometry for Dynamic Environments"< />
+	<meta property="og:description" content="IROS 21: A plane-based approach for improving the robustness of visual-inertial odometry algorithms in dynamic environments." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body>
+<div class="container">
+    <div class="title">
+        RP-VIO: Robust Plane-based Visual-Inertial Odometry for Dynamic Environments
+    </div>
+
+    <br>
+    <br>
+
+    <div class="author">
+	<a href="https://karnikram.info/">Karnik Ram</a>
+    </div>
+    <div class="author">
+    	<a href="https://kharyal.github.io/">Chaitanya Kharyal</a>
+    </div>
+    <div class="author">
+	<a href="https://github.com/sudarshan-s-harithas">Sudarshan S. Harithas</a>
+    </div>
+    <div class="author">
+	<a href="https://robotics.iiit.ac.in/">K. Madhava Krishna</a>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="affiliation">Robotics Research Center, IIIT Hyderabad</div>
+
+    <br>
+    <br>
+
+    <div class="container">
+    <div class="links">In <a href="https://www.iros2021.org/">IROS 2021</a></div>
+    </div>
+
+    <br>
+
+    <div class="links"><a href="https://arxiv.org/abs/2103.10400">[Paper]</a></div>
+    <div class="links"><a href="https://www.youtube.com/watch?v=Fp4l8JkuD30">[Video]</a></div>
+    <div class="links"><a href="https://github.com/karnikram/rp-vio">[Code]</a></div>
+    <div class="links"><a href="https://zenodo.org/record/4603494">[Data]</a></div>
+
+    <br><br>
+
+    <div class="teaser">
+        <a href="resources/results.mp4" target="_blank" style="cursor:zoom-in;">
+        <video autoplay loop muted playsinline width="100%">
+        <source src="resources/results.mp4" type="video/mp4">
+        </video>
+    <br>
+    <br>
+    </a>
+     <i>
+        Motivated by the presence of large planar
+        surfaces in man-made environments, we propose a monocular VIO
+        system that estimates motion only from one or more planes in the
+        scene based on their induced homographies, and ignoring all offthe-plane features. We show that this leads to improved robustness
+        and accuracy in dynamic environments.
+    </i>
+
+    <br>
+    <hr>
+
+    <h1>Abstract</h1>
+    <p>
+    Modern visual-inertial navigation systems (VINS) are faced with a critical challenge in real-world deployment: they need to operate reliably and robustly in highly dynamic environments.
+    Current best solutions merely filter dynamic objects as outliers based on the semantics of the object category. Such an approach does not scale as it requires semantic classifiers to encompass all possibly-moving object classes; this is hard to define, let alone deploy.
+    On the other hand, many real-world environments exhibit strong structural regularities in the form of planes such as walls and ground surfaces, which are also crucially static.
+    We present RP-VIO, a monocular visual-inertial odometry system that leverages the simple geometry of these planes for improved robustness and accuracy in challenging dynamic environments.
+    Since existing datasets have a limited number of dynamic elements, we also present a highly-dynamic, photorealistic synthetic dataset for a more effective evaluation of the capabilities of modern VINS systems.
+    We evaluate our approach on this dataset, and three diverse sequences from standard datasets including two real-world dynamic sequences and show a significant improvement in robustness and accuracy over a state-of-the-art monocular visual-inertial odometry system.
+    We also show in simulation an improvement over a simple dynamic-features masking approach. Our code and dataset are publicly available.
+    </p>
+
+    <br><br><hr>
+
+    <h1>Paper</h1>
+
+    <div class="paper-thumbnail">
+        <a href="https://arxiv.org">
+            <img class="layered-paper-big" width="100%" src="./resources/paper.png" alt="Paper thumbnail."/>
+        </a>
+    </div>
+    <div class="paper-info">
+	<h4>RP-VIO: Robust Plane-based Visual-Inertial Odometry for Dynamic Environments</h4>
+        <h5>
+	    Karnik Ram, Chaitanya Kharyal, Sudarshan S. Harithas, K. Madhava Krishna
+        </h5>
+        <pre><code>
+        @article{rpvio,
+        title={RP-VIO: Robust Plane-based Visual-Inertial Odometry for Dynamic Environments},
+        author={Ram, Karnik and Kharyal, Chaitanya and Harithas, Sudarshan S and Krishna, K Madhava},
+        journal={arXiv preprint arXiv:2103.10400},
+        year={2021}
+        }	
+        </code></pre>
+    </div>
+
+    <br><br><hr>
+
+   <h1>Videos</h1>
+	<h2> Short Video (1 minute)</h2>
+	    <div class="video-container">
+	    <iframe src="https://www.youtube.com/embed/2GMoUJEDO0U" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+     </div>
+    <br>
+    <br>
+    <h2> Presentation Video (10 minutes)</h2>
+        <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/Fp4l8JkuD30" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+     <br><br><hr>
+    
+    <h1>Code</h1>
+    <a href="https://github.com/karnikram/rp-vio">
+        <img style="width:60%;" src="./resources/method_diagram.png"
+             alt="Model overview figure"/>
+    </a>
+    <br>
+    <a class="links" href="https://github.com/karnikram/rp-vio">[GitHub]</a>
+
+    <br><br><hr>
+
+    <h1>Data</h1>
+    <a href="https://zenodo.org/record/4603494">
+        <img style="width:50%;" src="./resources/rpvio_sim.png"
+             alt="RPVIO-Sim Setup"/>
+    </a>
+    <br>
+    <a class="links" href="https://zenodo.org/record/4603494">[Zenodo]</a>
+
+    <br><br><hr>
+
+    <h1>Acknowledgements</h1>
+    <p>
+        The authors thank the anonymous reviewers for helpful comments, and MathWorks India Hyderabad for generous financial support.
+        <a href="https://github.com/jasonyzhang/webpage-template">Webpage template</a>.
+    </p>
+
+    <br><br>
+</div>
+
+</body>
+
+</html>
