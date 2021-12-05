@@ -1,14 +1,15 @@
 ## RP-VIO: Robust Plane-based Visual-Inertial Odometry for Dynamic Environments
+Karnik Ram, Chaitanya Kharyal, Sudarshan S. Harithas, K. Madhava Krishna.
+
+[[`arXiv`](https://arxiv.org/pdf/2103.10400.pdf)]
+[[`Project Page`](https://karnikram-info/rp-vio/)]
+
+In IROS 2021
 
 <p align="center">
 <a href="https://user-images.githubusercontent.com/12653355/111314569-88dfb000-8687-11eb-87c8-212f7ad13489.png"><img src="https://user-images.githubusercontent.com/12653355/111314569-88dfb000-8687-11eb-87c8-212f7ad13489.png" width="700"/></a>
 </p>
 RP-VIO is a monocular visual-inertial odometry (VIO) system that uses only planar features and their induced homographies, during both initialization and sliding-window estimation, for increased robustness and accuracy in dynamic environments.
-
-**Pre-print**: https://arxiv.org/abs/2103.10400
-
-**Introductory video**<br><br>
-[![Intro video](https://user-images.githubusercontent.com/12653355/111311553-5e402800-8684-11eb-85bd-0db5b7494772.png)](https://youtu.be/2GMoUJEDO0U "RP-VIO: Intro Video")
 
 ## Setup
 Our evaluation setup is a 6-core Intel Core i5-8400 CPU with 8GB RAM and a 1 TB HDD, running Ubuntu 18.04.1. We recommend using a more powerful setup, especially for heavy datasets like ADVIO or OpenLORIS.
