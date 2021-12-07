@@ -2,7 +2,7 @@
 Karnik Ram, Chaitanya Kharyal, Sudarshan S. Harithas, K. Madhava Krishna.
 
 [[`arXiv`](https://arxiv.org/pdf/2103.10400.pdf)]
-[[`Project Page`](https://karnikram-info/rp-vio/)]
+[[`Project Page`](https://karnikram.info/rp-vio/)]
 
 In IROS 2021
 
