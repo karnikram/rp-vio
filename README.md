@@ -58,7 +58,7 @@ We evaluate on two real-world sequences: the market1-1 sequence from the OpenLOR
 ### Own data
 To run RP-VIO on your own data, you need to provide synchronized monocular images, IMU readings, and plane masks on three separate ROS topics. The camera and IMU need to be properly calibrated and synchronized as there is no online calibration. A plane segmentation model to segment plane masks from images is provided [below](https://github.com/karnikram/rp-vio#plane-segmentation).
 
-A semantic segmentation model can also be as long as the RGB labels of the (static) planar semantic classes are provided. As an example, we evaluate on a sequence from the VIODE dataset (provided [here](https://iiitaphyd-my.sharepoint.com/:f:/g/personal/robotics_iiit_ac_in/EoxFVvuAxUdFsnXu0XJY0egBMFxB9D8XbNqe0jkUkRdjVg?e=G18fDo)) using semantic segmentation labels which are specified in the [config file](https://github.com/karnikram/rp-vio/blob/semantic-viode/config/viode_config.yaml). To run, 
+A semantic segmentation model can also be used as long as the RGB labels of the (static) planar semantic classes are provided. As an example, we evaluate on a sequence from the VIODE dataset (provided [here](https://iiitaphyd-my.sharepoint.com/:f:/g/personal/robotics_iiit_ac_in/EoxFVvuAxUdFsnXu0XJY0egBMFxB9D8XbNqe0jkUkRdjVg?e=G18fDo)) using semantic segmentation labels which are specified in the [config file](https://github.com/karnikram/rp-vio/blob/semantic-viode/config/viode_config.yaml). To run, 
 
 ```
     cd ~/catkin_ws/src/rp-vio/scripts
